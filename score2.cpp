@@ -31,7 +31,7 @@ int main(int argc, char** argv){
 		
 		if( sum[0] <L||sum[1]<L ||area>H ){
 			cerr<<"INVALID\n";
-			cerr<<"sum = "<<sum<<" for c = "<<c<<"\n";
+			cerr<<"sum M= "<<sum[0]<<"sum T= "<<sum[1]<<" area = "<<area<<"\n";
 			return 1;
 		}	
 		sc+=area;
