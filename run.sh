@@ -14,7 +14,7 @@ else
 fi
 
 for name in $files; do
-	printf "Running for file $name...";
+	echo "Running for file $name...";
 	time ./bin/sol < "input/${name}.in" > "output/${name}.out" ;
 	score=`./bin/score "output/$name.out" < "input/$name.in"` || exit -1
 	echo "Your score for $name is: $score"

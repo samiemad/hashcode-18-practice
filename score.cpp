@@ -45,19 +45,14 @@ int main(int argc, char** argv){
 			int startingT=max(curRide.s,timeToStart);
 			int finshingT=startingT+tripDist;
 			if(finshingT>curRide.f)
-				cout<<"invalid: curRide "<<curRideId<<" :vih "<<i<<" is finishing after its finishing time\n";
+				cerr<<"invalid: curRide "<<curRideId<<" :vih "<<i<<" is finishing after its finishing time\n";
 			else
 			 	sc+=manhatten(curRide.St,curRide.Fn);
 			curT=finshingT;
 			Cur=curRide.Fn;
 		}
-		
-		if(curT>T){
-			cout<<"your"<<i<<"car has used "<< curT<<"minuets,and your just have "<<T<<"minuets\n";
-		}
 	}
-	double score = 1000.0 * sc / nn;
-	cout<<score;
+	cout<<sc;
 
 	return 0;
 }

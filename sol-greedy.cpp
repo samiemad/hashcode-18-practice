@@ -8,7 +8,7 @@ typedef pair<int,int> ii;
 int R, C, F, N, B, T;
 int sc,nn;
 struct ride{
-    int a,b,x,y,s,f;
+    int a,b,x,y,s,f,idx;
 };
 struct car{
     int x,y,t;
@@ -25,7 +25,7 @@ int dist(int x, int y, int xx, int yy){
 }
 
 int cmp(const ride& a, const ride& b){
-    return mt(a.f,a.s,-dist(a)) < mt(b.f,b.s,-dist(b));
+    return mt(a.f,a.s,dist(a)) < mt(b.f,b.s,dist(b));
 }
 
 int calcWeight(const car& c, const ride& r){
@@ -33,14 +33,16 @@ int calcWeight(const car& c, const ride& r){
     if( t < r.f )
         return t;
     else
-        return 2e9;
+        return 1e9;
 }
 
-int nearsetCar(const ride& r){
+int nearsetCar(int id){
+    const ride& r = rides[id];
     int c=-1;
     int mn = 1e9;
     for(int i=0; i<F; ++i){
-        int clc = calcWeight(cars[c], r);
+        int clc = calcWeight(cars[i], r);
+//        cerr<< "car "<<i<<" ride "<<id<<" clc= "<<clc<<"\n";
         if( mn > clc ){
             mn = clc;
             c = i;
@@ -51,16 +53,18 @@ int nearsetCar(const ride& r){
 
 int main(int argc, char** argv){
     cin>>R>>C>>F>>N>>B>>T;
-    for (int i=0;i<N;i++)
+    for (int i=0;i<N;i++){
         cin>>rides[i].a>>rides[i].b>>rides[i].x>>rides[i].y>>rides[i].s>>rides[i].f;
+        rides[i].idx = i;
+    }
 
     sort(rides, rides+N, cmp);
 
     for(int i=0; i<N; ++i){
         ride &r = rides[i];
-        int c = nearsetCar(r);
+        int c = nearsetCar(i);
         if( c != -1 ){
-            sol[c].pb(i);
+            sol[c].pb(r.idx);
             cars[c].t = calcWeight(cars[c], r);
             cars[c].x = r.x;
             cars[c].y = r.y;
