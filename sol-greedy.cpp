@@ -25,7 +25,7 @@ int dist(int x, int y, int xx, int yy){
 }
 
 int cmp(const ride& a, const ride& b){
-    return mt(a.f,a.s,dist(a)) < mt(b.f,b.s,dist(b));
+    return mt(a.f,a.s,-dist(a)) < mt(b.f,b.s,-dist(b));
 }
 
 int calcWeight(const car& c, const ride& r){
@@ -42,7 +42,6 @@ int nearsetCar(int id){
     int mn = 1e9;
     for(int i=0; i<F; ++i){
         int clc = calcWeight(cars[i], r);
-//        cerr<< "car "<<i<<" ride "<<id<<" clc= "<<clc<<"\n";
         if( mn > clc ){
             mn = clc;
             c = i;
