@@ -20,9 +20,33 @@ vector<int> sol[1003];
 int dist(const ride& r){
     return abs(r.a-r.x) + abs(r.b-r.y);
 }
+int dist(int x, int y, int xx, int yy){
+    return abs(x-xx) + abs(y-yy);
+}
 
 int cmp(const ride& a, const ride& b){
     return mt(a.f,a.s,-dist(a)) < mt(b.f,b.s,-dist(b));
+}
+
+int calcWeight(const car& c, const ride& r){
+    int t = max( c.t + dist(c.x, c.y, r.a, r.b), r.s ) + dist(r);
+    if( t < r.f )
+        return t;
+    else
+        return 2e9;
+}
+
+int nearsetCar(const ride& r){
+    int c=-1;
+    int mn = 1e9;
+    for(int i=0; i<F; ++i){
+        int clc = calcWeight(cars[c], r);
+        if( mn > clc ){
+            mn = clc;
+            c = i;
+        }
+    }
+    return c;
 }
 
 int main(int argc, char** argv){
@@ -32,24 +56,25 @@ int main(int argc, char** argv){
 
     sort(rides, rides+N, cmp);
 
-    cerr<<rides[0].a<<","<<rides[0].b<<","<<rides[0].x<<","<<rides[0].y<<","<<rides[0].s<<","<<rides[0].f<<"\n";
-
     for(int i=0; i<N; ++i){
         ride &r = rides[i];
-        int c = nearsetCar(r.a,r.b);
+        int c = nearsetCar(r);
         if( c != -1 ){
             sol[c].pb(i);
-            cars[c].t = calc(c, i);
+            cars[c].t = calcWeight(cars[c], r);
             cars[c].x = r.x;
             cars[c].y = r.y;
         }
     }
+    int t=0;
     for(int i=0; i<F; ++i){
-        cout<<i;
+        t += sol[i].size();
+        cout<<sol[i].size();
         for(auto x:sol[i])
             cout<<" "<<x;
         cout<<"\n";
     }
+    cerr<< 100.0 * t / N <<"% rides taken\n";
 
     return 0;
 }
