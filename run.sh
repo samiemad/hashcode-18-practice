@@ -3,14 +3,14 @@
 echo "Compiling..."
 mkdir -p bin output
 g++ score.cpp --std=c++14 -O3 -o bin/score || exit -1
-g++ sol-dp.cpp --std=c++14 -O3 -o bin/sol || exit -1
+g++ sol-greedy.cpp --std=c++14 -O3 -o bin/sol || exit -1
 
 if [[ $1 == "all" ]]; then
-	files="example small medium big";
+	files="a_example b_should_be_easy c_no_hurry d_metropolis e_high_bonus";
 elif [[ $1 == "fast" ]]; then
-	files="example small medium";
+	files="a_example b_should_be_easy c_no_hurry";
 else
-	files="example";
+	files="a_example";
 fi
 
 for name in $files; do
